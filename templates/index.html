@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-text {
+            flex: 1;
+        }
+        .task-done {
+            color: green;
+            font-weight: bold;
+        }
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .btn-delete {
+            background-color: #FF0000;
+        }
+        .add-task-form {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .task-input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>To-Do List</h1>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <span class="task-text {% if task.done %}task-done{% endif %}">{{ task.task }}</span>
+            <div class="task-actions">
+                {% if not task.done %}
+                <a href="/mark_task_done/{{ task.id }}" class="btn">Mark as Done</a>
+                {% endif %}
+                <a href="/delete_task/{{ task.id }}" class="btn btn-delete">Delete</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <form action="/add_task" method="post" class="add-task-form">
+        <input type="text" name="task" placeholder="Add a new task" class="task-input" required>
+        <button type="submit" class="btn">Add</button>
+    </form>
+</div>
+</body>
+</html>
